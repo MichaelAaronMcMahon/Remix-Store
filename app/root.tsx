@@ -35,6 +35,27 @@ export const loader = async () => {
         picture: "/red-shirt.jpg",
         price: 6
       },
+      {
+        id: "Green Shirt",
+        picture: "/green-shirt.jpg",
+        price: 4
+      },
+      {
+        id: "Yellow Shirt",
+        picture: "/yellow-shirt.jpg",
+        price: 5
+      },
+      {
+        id: "Purple Shirt",
+        picture: "/purple-shirt.jpg",
+        price: 8
+      },
+      {
+        id: "Orange Shirt",
+        picture: "/orange-shirt.png",
+        price: 7
+      },
+
     ],
   });
 };

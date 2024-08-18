@@ -82,6 +82,7 @@ export default function Index() {
               <li key={item.id}>
                 {item.id}
                 <br></br>
+                ${item.price}
                 {/* ${items.total} */}
                 <br></br>
                 <img src={item.picture} width="120" ></img>
