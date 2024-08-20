@@ -1,22 +1,17 @@
 import { json, redirect } from "@remix-run/node";
-import { useEffect } from "react";
 import {
   Form,
   Outlet,
-  ScrollRestoration,
   useLoaderData,
   useNavigation,
-  useSubmit,
 } from "@remix-run/react";
 import type { 
   LinksFunction,
-  LoaderFunctionArgs,
   ActionFunctionArgs
 } from "@remix-run/node";
 // existing imports
 import appStylesHref from "./app.css?url";
-import { createEmptyContact, getContacts, updateTotal } from "./cartItems";
-import styles from "./tailwind.css?url";
+import { createEmptyItem, } from "./cartItems";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: appStylesHref },
@@ -55,7 +50,6 @@ export const loader = async () => {
         picture: "/orange-shirt.png",
         price: 7
       },
-
     ],
   });
 };
@@ -64,17 +58,9 @@ export const action = async ({
   params,
   request,
 }:ActionFunctionArgs) => {
-  // var id = document.getElementById("id").value
-  // var picture = document.getElementById("picture").value
   const formData = await request.formData();
   const updates = Object.fromEntries(formData);
-  const contact = await createEmptyContact(updates);
-  for (const value of formData.values()) {
-    console.log(value);
-  }
-  //console.log(valueOf(formData.get("price").toString()) + 1)
-  //await updateTotal(updates.price)
-  //return json({ contact });
+  const Item = await createEmptyItem(updates);
   return redirect(`/`);
 };
 
@@ -87,9 +73,7 @@ export default function App() {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {/* <link href="./app/output.css" rel="stylesheet"></link> */}
       </head>
-      
       <body>
         <div id="store" style={{float:"left"}}>
           <h1>Shop</h1>

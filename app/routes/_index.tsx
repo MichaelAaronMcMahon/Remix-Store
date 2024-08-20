@@ -1,18 +1,12 @@
 import type { MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { 
-  Link, 
-  Outlet, 
   useLoaderData,
   useNavigation,
   Form,
-  NavLink,
 
  } from "@remix-run/react";
  import type { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
- import invariant from "tiny-invariant";
-
-
 
 export const meta: MetaFunction = () => {
   return [
@@ -21,12 +15,12 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-import { getContact, getContacts, deleteContact, getTotal, updateTotal } from "../cartItems";
+import { getItems, deleteItem, getTotal, updateTotal } from "../cartItems";
 var total = 0;
 export const loader = async ({
   params,
 }: LoaderFunctionArgs) => {
-  const items = await getContacts();
+  const items = await getItems();
   if (!items) {
     throw new Response("Not Found", { status: 404 });
   }
@@ -36,16 +30,9 @@ export const loader = async ({
 export const action = async ({
   request,
 }:ActionFunctionArgs) => {
-  // var id = document.getElementById("id").value
-  // var picture = document.getElementById("picture").value
   const formData = await request.formData();
   const id = formData.get('id') as string
-  const contact = await deleteContact(id);
-  //await updateTotal(formData.get('price'))
-  for (const value of formData.values()) {
-    console.log(value);
-  }
-  //return json({ contact });
+  const Item = await deleteItem(id);
   return redirect(`/`);
 };
 
@@ -62,7 +49,6 @@ export default function Index() {
       <body>
         <div id="store">
           <h1>Cart</h1>
-          {/* <h1>Total: ${total}</h1> */}
           <Form
              action="purchase"
              method="post"
@@ -98,6 +84,7 @@ export default function Index() {
             ))}
           </ul>
         </div>
-
       </body>
     </html>
+  )
+};

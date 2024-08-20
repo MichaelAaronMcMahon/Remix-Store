@@ -1,89 +1,76 @@
 
-type ContactMutation = {
+type ItemMutation = {
   id?: string;
   picture?: string;
   price?: BigInteger;
 };
 
-export type ContactRecord = ContactMutation & {
+export type ItemRecord = ItemMutation & {
   id: string;
   createdAt: string;
 };
 
-const fakeContacts = {
+const cartItems = {
 
-  records: {} as Record<string, ContactRecord>,
+  records: {} as Record<string, ItemRecord>,
     total: 0,
-  async getAll(): Promise<ContactRecord[]> {
-    return Object.keys(fakeContacts.records)
-      .map((key) => fakeContacts.records[key])
+  
+  async getAll(): Promise<ItemRecord[]> {
+    return Object.keys(cartItems.records)
+      .map((key) => cartItems.records[key])
   },
 
-  async get(id: string): Promise<ContactRecord | null> {
-    return fakeContacts.records[id] || null;
+  async get(id: string): Promise<ItemRecord | null> {
+    return cartItems.records[id] || null;
   },
 
-  async create(values: ContactMutation): Promise<ContactRecord> {
-
+  async create(values: ItemMutation): Promise<ItemRecord> {
     const id = values.id|| Math.random().toString(36).substring(2, 9);
     const picture = values.picture;
     const createdAt = new Date().toISOString();
-    const newContact = { id, picture, createdAt, ...values };
-    fakeContacts.records[id] = newContact;
-    return newContact;
+    const newItem = { id, picture, createdAt, ...values };
+    cartItems.records[id] = newItem;
+    return newItem;
   },
 
   destroy(id: string): null {
-    delete fakeContacts.records[id];
+    delete cartItems.records[id];
     return null;
   },
 };
 
-export async function getContacts(query?: string | null) {
+export async function getItems(query?: string | null) {
   await new Promise((resolve) => setTimeout(resolve, 500));
-  let contacts = await fakeContacts.getAll();
-  return contacts;
+  let Items = await cartItems.getAll();
+  return Items;
 }
 
 export async function deleteAll() {
   await new Promise((resolve) => setTimeout(resolve, 500));
-  let contacts = await fakeContacts.getAll();
-  console.log(contacts.length);
-  for(var i = 0; i < contacts.length; i++){
-    console.log(contacts[i].id);
-    deleteContact(contacts[i].id);
+  let Items = await cartItems.getAll();
+  for(var i = 0; i < Items.length; i++){
+    deleteItem(Items[i].id);
   }
-  return contacts;
+  return Items;
 }
 
-export async function createEmptyContact(values: ContactMutation) {
-  const contact = await fakeContacts.create(values);
-  return contact;
+export async function createEmptyItem(values: ItemMutation) {
+  const Item = await cartItems.create(values);
+  return Item;
 }
 
-export async function getContact(id: string) {
-  return fakeContacts.get(id);
+export async function getItem(id: string) {
+  return cartItems.get(id);
 }
 
-export async function deleteContact(id: string) {
-    fakeContacts.destroy(id);
+export async function deleteItem(id: string) {
+    cartItems.destroy(id);
 }
 
 export async function getTotal() {
-    return fakeContacts.total;
+    return cartItems.total;
   }
 
 export async function updateTotal(price: number){
-    fakeContacts.total = fakeContacts.total + price;
+    cartItems.total = cartItems.total + price;
 }
-
-// export async function sumPrice(){
-//     await new Promise((resolve) => setTimeout(resolve, 500));
-//     let contacts = await fakeContacts.getAll();
-//     var len = contacts.length;
-//     let sum = 0
-//     for (var i=0; i<contacts.length; i++){
-//         let sum = sum + contacts[i].price;
-//     }
-//     return sum;
-// }
