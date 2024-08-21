@@ -24,15 +24,8 @@ export const loader = async ({
   if (!items) {
     throw new Response("Not Found", { status: 404 });
   }
-  // total2 = await getTotal();
-  
-  // console.log(total)
-  // console.log(items)
-  // console.log(items.length)
   var displayTotal = 0 as number
-  console.log(items.forEach((element) => console.log(element.price)))
   items.forEach((element) => {displayTotal += parseInt(element.price)})
-  console.log(displayTotal)
   total = displayTotal
   return json({ items });
 };
@@ -89,6 +82,26 @@ export default function Index() {
                   <input type="hidden" id="price" name="price" value={item.price}></input><br></br>
                   <button type="submit">Delete</button>
                 </Form>
+                <br></br>
+                Quantity: {item.quantity}
+                <div style={{float:"right"}}>
+                  <Form method="post" action = "increment">
+                    <input type="hidden" id="id" name="id" value={item.id}></input>
+                    <input type="hidden" id="picture" name="picture" value={item.picture}></input><br></br>
+                    <input type="hidden" id="price" name="price" value={item.price}></input><br></br>
+                    <button type="submit">+</button>
+                  </Form>
+                </div>
+                <div style={{float:"left"}}>
+                  <Form method="post" action = "decrement" >
+                    <input type="hidden" id="id" name="id" value={item.id}></input>
+                    <input type="hidden" id="picture" name="picture" value={item.picture}></input><br></br>
+                    <input type="hidden" id="price" name="price" value={item.price}></input><br></br>
+                    <button type="submit" >-</button>
+                  </Form>
+                </div>
+                <br></br>
+                <br></br>
                 <br></br>
                 <br></br>
               </li>

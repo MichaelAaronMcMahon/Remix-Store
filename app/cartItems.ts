@@ -3,6 +3,7 @@ type ItemMutation = {
   id?: string;
   picture?: string;
   price?: number;
+  quantity?: 1;
 };
 
 export type ItemRecord = ItemMutation & {
@@ -33,8 +34,10 @@ const cartItems = {
     const createdAt = new Date().toISOString();
     const newItem = { id, picture, createdAt, ...values };
     cartItems.records[id] = newItem;
+    newItem.quantity = 1;
     //total = total + values.price;
     cartItems.total[id] = values.price;
+    
     return newItem;
   },
 
@@ -42,6 +45,8 @@ const cartItems = {
     delete cartItems.records[id];
     return null;
   },
+
+  
 };
 
 export async function getItems(query?: string | null) {
@@ -62,6 +67,62 @@ export async function deleteAll() {
 export async function createItem(values: ItemMutation) {
   const Item = await cartItems.create(values);
   return Item;
+}
+
+export async function updatePrice(id: string){
+  let updateItem = cartItems.records[id];
+  updateItem.quantity += 1;
+  //updateItem.price += parseInt(updateItem.price);
+  var origPrice = 0
+  if(id == "Blue Shirt" || id == "Yellow Shirt"){
+    origPrice = 5
+  }
+  if(id == "Red Shirt"){
+    origPrice = 6
+  }
+  if(id == "Green Shirt"){
+    origPrice = 4
+  }
+  if(id == "Purple Shirt"){
+    origPrice = 8
+  }
+  if(id == "Orange Shirt"){
+    origPrice = 7
+  }
+  var newPrice = 0 as number;
+  newPrice = parseInt(origPrice) * parseInt(updateItem.quantity);
+  updateItem.price = newPrice;
+
+}
+
+export async function decrementPrice(id: string){
+  let updateItem = cartItems.records[id];
+  if (updateItem.quantity == 1){
+    deleteItem(id);
+  }
+  else{
+    updateItem.quantity -= 1;
+    //updateItem.price += parseInt(updateItem.price);
+    var origPrice = 0
+    if(id == "Blue Shirt" || id == "Yellow Shirt"){
+      origPrice = 5
+    }
+    if(id == "Red Shirt"){
+      origPrice = 6
+    }
+    if(id == "Green Shirt"){
+      origPrice = 4
+    }
+    if(id == "Purple Shirt"){
+      origPrice = 8
+    }
+    if(id == "Orange Shirt"){
+      origPrice = 7
+    }
+    var newPrice = 0 as number;
+    newPrice = parseInt(origPrice) * parseInt(updateItem.quantity);
+    updateItem.price = newPrice;
+  }
 }
 
 export async function getItem(id: string) {

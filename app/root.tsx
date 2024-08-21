@@ -23,32 +23,38 @@ export const loader = async () => {
       {
         id: "Blue Shirt",
         picture: "/blue-shirt.jpg",
-        price: 5
+        price: 5,
+        quantity: 1
       },
       {
         id: "Red Shirt",
         picture: "/red-shirt.jpg",
-        price: 6
+        price: 6,
+        quantity: 1
       },
       {
         id: "Green Shirt",
         picture: "/green-shirt.jpg",
-        price: 4
+        price: 4,
+        quantity: 1
       },
       {
         id: "Yellow Shirt",
         picture: "/yellow-shirt.jpg",
-        price: 5
+        price: 5,
+        quantity: 1
       },
       {
         id: "Purple Shirt",
         picture: "/purple-shirt.jpg",
-        price: 8
+        price: 8,
+        quantity: 1
       },
       {
         id: "Orange Shirt",
         picture: "/orange-shirt.png",
-        price: 7
+        price: 7,
+        quantity: 1
       },
     ],
   });
