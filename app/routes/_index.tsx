@@ -15,8 +15,8 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-import { getItems, deleteItem, getTotal, updateTotal } from "../cartItems";
-var total = 0;
+import { getItems, deleteItem, getTotal, updateTotal, confirmFunction } from "../cartItems";
+var total = 0 as number;
 export const loader = async ({
   params,
 }: LoaderFunctionArgs) => {
@@ -24,7 +24,16 @@ export const loader = async ({
   if (!items) {
     throw new Response("Not Found", { status: 404 });
   }
-  total = await getTotal();
+  // total2 = await getTotal();
+  
+  // console.log(total)
+  // console.log(items)
+  // console.log(items.length)
+  var displayTotal = 0 as number
+  console.log(items.forEach((element) => console.log(element.price)))
+  items.forEach((element) => {displayTotal += parseInt(element.price)})
+  console.log(displayTotal)
+  total = displayTotal
   return json({ items });
 };
 export const action = async ({
@@ -49,6 +58,8 @@ export default function Index() {
       <body>
         <div id="store">
           <h1>Cart</h1>
+          <h1>Total: ${total}</h1>
+          
           <Form
              action="purchase"
              method="post"
@@ -61,7 +72,7 @@ export default function Index() {
                }
              }}
            >
-            <button type="submit">Purchase</button>
+            <button type="submit" onClick={confirmFunction} >Purchase</button>
           </Form>
           <ul>
             {items.map((item) => (

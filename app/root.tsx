@@ -11,7 +11,7 @@ import type {
 } from "@remix-run/node";
 // existing imports
 import appStylesHref from "./app.css?url";
-import { createEmptyItem, } from "./cartItems";
+import { createItem, } from "./cartItems";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: appStylesHref },
@@ -55,12 +55,11 @@ export const loader = async () => {
 };
 
 export const action = async ({
-  params,
   request,
 }:ActionFunctionArgs) => {
   const formData = await request.formData();
   const updates = Object.fromEntries(formData);
-  const Item = await createEmptyItem(updates);
+  const Item = await createItem(updates);
   return redirect(`/`);
 };
 
@@ -76,6 +75,7 @@ export default function App() {
       </head>
       <body>
         <div id="store" style={{float:"left"}}>
+          
           <h1>Shop</h1>
           <br></br>
           <ul>

@@ -2,7 +2,7 @@
 type ItemMutation = {
   id?: string;
   picture?: string;
-  price?: BigInteger;
+  price?: number;
 };
 
 export type ItemRecord = ItemMutation & {
@@ -10,10 +10,13 @@ export type ItemRecord = ItemMutation & {
   createdAt: string;
 };
 
+var total = 0 as number;
+
 const cartItems = {
 
   records: {} as Record<string, ItemRecord>,
-    total: 0,
+  //total: 0 as number,
+  total: {} as Record<string, number>,
   
   async getAll(): Promise<ItemRecord[]> {
     return Object.keys(cartItems.records)
@@ -30,6 +33,8 @@ const cartItems = {
     const createdAt = new Date().toISOString();
     const newItem = { id, picture, createdAt, ...values };
     cartItems.records[id] = newItem;
+    //total = total + values.price;
+    cartItems.total[id] = values.price;
     return newItem;
   },
 
@@ -54,7 +59,7 @@ export async function deleteAll() {
   return Items;
 }
 
-export async function createEmptyItem(values: ItemMutation) {
+export async function createItem(values: ItemMutation) {
   const Item = await cartItems.create(values);
   return Item;
 }
@@ -73,4 +78,9 @@ export async function getTotal() {
 
 export async function updateTotal(price: number){
     cartItems.total = cartItems.total + price;
+}
+
+export async function confirmFunction() {
+  
+  confirm()
 }
