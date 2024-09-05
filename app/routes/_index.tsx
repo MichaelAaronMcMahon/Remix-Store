@@ -1,3 +1,11 @@
+/**
+ * The index route serves as the dynamic cart maintained by the user. 
+ * Its loader calls the getAll function from cartItems.ts, returning all of the items added to cartItems.records through the root route.
+ * It uses useLoaderData similarly to the root route to display the items in a bulleted list.
+ * Additionally, each item in the list has buttons for deleting the item from the cart and editing its quantity.
+ * The delete form sends the formData to index's action, whereas the increment and decrement buttons send the form data to their respective routes.
+ */
+
 import type { MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { 
@@ -50,7 +58,7 @@ export default function Index() {
       </head>
       <body>
         <div id="store">
-          <h1>Cart</h1>
+          <h1 >Cart</h1>
           <h1>Total: ${total}</h1>
           
           <Form

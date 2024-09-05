@@ -1,3 +1,8 @@
+/**
+ * tsx file for the decrement action in index.tsx
+ * Calls decrementPrice with the ID submitted in the form, decreasing the quantity of the cart item and thus its overall price.
+ */
+
 import { decrementPrice } from "../cartItems";
 import { redirect, ActionFunctionArgs } from "@remix-run/node";
 

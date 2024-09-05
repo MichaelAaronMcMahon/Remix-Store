@@ -1,3 +1,8 @@
+/**
+ * tsx file for the increment action in index.tsx
+ * Calls updatePrice with the ID submitted in the form, increasing the quantity of the cart item and thus its overall price.
+ */
+
 import { updatePrice } from "../cartItems";
 import { redirect, ActionFunctionArgs } from "@remix-run/node";
 

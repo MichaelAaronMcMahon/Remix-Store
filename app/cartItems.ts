@@ -1,3 +1,7 @@
+/**
+ * The typescript file which handles the data model for the cart and defines the functions which are used to edit it. 
+ * The functions are imported across the other routes to add items, delete items and edit item quantity.
+ */
 
 type ItemMutation = {
   id?: string;
